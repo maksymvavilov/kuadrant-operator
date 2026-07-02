@@ -50,6 +50,7 @@ func (r *EffectiveAuthPolicyReconciler) Reconcile(ctx context.Context, _ []contr
 	return nil
 }
 
+// CalculateEffectiveAuthPolicies computes effective auth policies for all route rules in the topology.
 func CalculateEffectiveAuthPolicies(ctx context.Context, topology *machinery.Topology, kuadrant machinery.Object, state *sync.Map) EffectiveAuthPolicies {
 	logger := controller.LoggerFromContext(ctx).WithName("calculateEffectivePolicies").WithValues("context", ctx)
 
