@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"sync"
+	"time"
 
 	"github.com/kuadrant/policy-machinery/controller"
 	"github.com/kuadrant/policy-machinery/machinery"
@@ -75,6 +76,7 @@ func CalculateEffectiveAuthPolicies(ctx context.Context, topology *machinery.Top
 
 	for _, gatewayClass := range gatewayClasses {
 		for _, routeRule := range allRouteRules {
+			time.Sleep(50 * time.Microsecond)
 			paths := targetables.Paths(gatewayClass, routeRule) // this may be expensive in clusters with many gateway classes - an alternative is to deep search the topology for httprouterules from each gatewayclass, keeping record of the paths
 			for i := range paths {
 				if effectivePolicy := kuadrantv1.EffectivePolicyForPath[*kuadrantv1.AuthPolicy](paths[i], isAuthPolicyAcceptedAndNotDeletedFunc(state)); effectivePolicy != nil {
